@@ -32,6 +32,11 @@ test_split = 0.35
 n_folds = 5 #k-fold cross validation
 pca_weights = None
 
+
+'''
+Read images and preprocess the input data.
+Precproessing include: cropping, reshaping, normalizing the input RGB values to [0,1] scale.
+'''
 def read_preprocess_data():
     X_data = []
     X_classes = []
@@ -68,6 +73,11 @@ def read_preprocess_data():
     print("Test Classes: ", test_classes)
     return train_data, test_data, train_classes, test_classes
 
+'''
+Creting a multi-layer CNN.
+Relu - acivation for Convolution layers
+Softmax - acivation for Fully Connected Layer leading for multi-class predictions
+'''
 def create_model():
   model = Sequential()
   #model.add(Conv2D(25, (5, 5), input_shape=(50, 50, 3)))
@@ -177,6 +187,16 @@ test_classes = load_array("test_classes.pk1")
 #print(test_classes)
 test_classes = np_utils.to_categorical(test_classes)
 #print(test_classes[0])
+
+'''
+PCA initialization of weights.
+
+Generate patches from inputs, run PCA, get first first few principal components and use them as weight vectors.
+Reference:
+
+https://ieeexplore.ieee.org/abstract/document/6706969
+
+'''
 
 ######### Start PCA ##############
 
